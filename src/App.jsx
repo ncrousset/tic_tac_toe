@@ -30,6 +30,7 @@ const WINNER_COMBOS = [
   [2,4,6]
 ]
 
+
 function App() {
   const [turn, setTurn] = useState(TURNS.X)
 
@@ -52,6 +53,12 @@ function App() {
     return null
   }
 
+  const resetGame = () => {
+    setBoard(Array(9).fill(null))
+    setTurn(TURNS.X)
+    setWinner(null)
+  }
+  
   const updateBoard = (index) => {
     // No actualizamos esta posicion si tienes valor
     if (board[index] || winner) return
@@ -99,6 +106,31 @@ function App() {
           {TURNS.O}
         </Square>
       </section>
+
+      {
+        winner !== null && (
+          <section className="winner">
+            <div className="text">
+              <h2>
+                {
+                  winner === false
+                    ? 'Empate'
+                    : 'Gano:'
+                }
+              </h2>
+
+              <header className="win">
+                {winner && <Square>{winner}</Square>}
+              </header>
+
+              <footer>
+                <button onClick={resetGame}>Empezar de nuevo</button>
+              </footer>
+            </div>
+          </section>
+        )
+      }
+
     </main>
   )
 }
